@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eelite Language Academy | Mastering Communication</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --navy: #0F2040;
+            --gold: #C5A059;
+            --gold-light: #DFB86C;
+            --white: #FFFFFF;
+            --gray-light: #F8F9FA;
+            --text-dark: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: var(--white);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .zh { display: none; } /* Default hidden Mandarin */
+
+        /* Header & Navbar */
+        header {
+            background-color: var(--navy);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--white);
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .logo h1 {
+            color: var(--gold);
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            font-weight: 300;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .lang-toggle {
+            background-color: var(--gold);
+            color: var(--navy);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .lang-toggle:hover {
+            background-color: var(--gold-light);
+        }
+
+        /* Hero Section - UPDATED BACKGROUND */
+        .hero {
+            background: linear-gradient(rgba(15, 32, 64, 0.8), rgba(15, 32, 64, 0.9)), url('image_5958ee.jpg') center/cover;
+            color: var(--white);
+            text-align: center;
+            padding: 120px 20px;
+        }
+
+        .hero h2 {
+            color: var(--gold);
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-wa {
+            background-color: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px;
+            transition: 0.3s;
+        }
+        .btn-wa:hover { background-color: #1ebe57; }
+
+        .btn-ig {
+            background-color: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px;
+            transition: 0.3s;
+        }
+        .btn-ig:hover {
+            background-color: var(--gold);
+            color: var(--navy);
+        }
+
+        /* Sections General */
+        .section {
+            padding: 80px 50px;
+        }
+        .section-light { background-color: var(--gray-light); }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--gold);
+            margin: 10px auto 0;
+        }
+
+        /* Services & Why Us */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            border-bottom: 4px solid var(--gold);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover { transform: translateY(-10px); }
+
+        .card i {
+            font-size: 3rem;
+            color: var(--navy);
+            margin-bottom: 20px;
+        }
+
+        /* Experience Section */
+        .experience-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .experience-text { flex: 1; min-width: 300px; }
+        .experience-photos {
+            flex: 1.2; 
+            display: flex; 
+            gap: 15px; 
+            min-width: 300px;
+        }
+        .experience-photos img {
+            flex: 1;
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid var(--gold);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Video Section */
+        .video-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            background-color: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid var(--gold);
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Testimonials */
+        .testimonial-card {
+            background-color: var(--navy);
+            color: var(--white);
+            padding: 25px;
+            border-radius: 10px;
+            font-style: italic;
+            position: relative;
+        }
+        .testimonial-card::before {
+            content: "\201C";
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: var(--gold);
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            opacity: 0.5;
+        }
+        .author {
+            margin-top: 15px;
+            font-weight: bold;
+            color: var(--gold);
+            font-style: normal;
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: var(--white);
+            margin-bottom: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        .faq-question {
+            background-color: var(--navy);
+            color: var(--white);
+            padding: 15px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+        }
+        .faq-answer {
+            padding: 20px;
+            display: none;
+            border-left: 3px solid var(--gold);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--navy);
+            color: var(--white);
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 5px solid var(--gold);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .section { padding: 50px 20px; }
+            header { padding: 15px 20px; }
+            .experience-photos { flex-direction: column; }
+            .experience-photos img { height: auto; max-height: 250px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="Logo.jpg" alt="Eelite Logo" onerror="this.src='https://via.placeholder.com/50/0F2040/C5A059?text=EA'">
+            <h1>EELITE</h1>
+        </div>
+        <nav class="nav-links">
+            <a href="#services"><span class="id">Layanan</span><span class="zh">服务</span></a>
+            <a href="#about"><span class="id">Profil</span><span class="zh">简介</span></a>
+            <a href="#video"><span class="id">Kelas</span><span class="zh">课程剪影</span></a>
+            <a href="#testimonials"><span class="id">Testimoni</span><span class="zh">评价</span></a>
+            <a href="#faq"><span class="id">FAQ</span><span class="zh">常见问题</span></a>
+        </nav>
+        <button class="lang-toggle" onclick="toggleLanguage()">
+            <i class="fas fa-globe"></i> <span id="langBtnText">中文</span>
+        </button>
+    </header>
+
+    <section class="hero">
+        <h2>
+            <span class="id">Kuasai Komunikasi,<br>Buka Peluang Global</span>
+            <span class="zh">掌握沟通技巧，<br>开启全球机遇</span>
+        </h2>
+        <p>
+            <span class="id">Eelite Language Academy hadir untuk meningkatkan kemampuan bahasa Mandarin, Indonesia, dan Inggris Anda untuk kebutuhan industri, bisnis, perhotelan, hingga transaksi e-commerce.</span>
+            <span class="zh">Eelite语言学院致力于提升您的中文、印尼语和英语能力，满足工业、商业、酒店及电商交易需求。</span>
+        </p>
+        <div>
+            <a href="https://wa.me/6288210894715" target="_blank" class="btn-wa">
+                <i class="fab fa-whatsapp"></i> Hubungi Kami / 联系我们
+            </a>
+            <a href="https://www.instagram.com/eelitelanguageacademy/" target="_blank" class="btn-ig">
+                <i class="fab fa-instagram"></i> @eelitelanguageacademy
+            </a>
+        </div>
+    </section>
+
+    <section id="services" class="section section-light">
+        <h2 class="section-title">
+            <span class="id">Layanan Kami</span>
+            <span class="zh">我们的服务</span>
+        </h2>
+        <div class="grid-3">
+            <div class="card">
+                <i class="fas fa-industry"></i>
+                <h3><span class="id">Bahasa untuk Industri & Bisnis</span><span class="zh">商务与工业语言</span></h3>
+                <p>
+                    <span class="id">Pelatihan khusus untuk perusahaan manufaktur, supplier, kelistrikan, hotel, dan restoran.</span>
+                    <span class="zh">专为制造企业、供应商、电力、酒店及餐厅提供的定制培训。</span>
+                </p>
+            </div>
+            <div class="card">
+                <i class="fas fa-shopping-cart"></i>
+                <h3><span class="id">Navigasi E-Commerce</span><span class="zh">电商平台教学</span></h3>
+                <p>
+                    <span class="id">Pelajari cara menggunakan Taobao, 1688, dan platform Tiongkok lainnya untuk import/bisnis Anda.</span>
+                    <span class="zh">学习如何使用淘宝、1688等中国电商平台，助力您的进口生意。</span>
+                </p>
+            </div>
+            <div class="card">
+                <i class="fas fa-graduation-cap"></i>
+                <h3><span class="id">HSK, Privat & Traveling</span><span class="zh">HSK, 私教与旅游</span></h3>
+                <p>
+                    <span class="id">Kelas privat untuk persiapan ujian HSK, komunikasi sehari-hari, hingga bahasa untuk traveling. (Tersedia opsi Bahasa Inggris).</span>
+                    <span class="zh">针对HSK考试准备、日常交流及旅游沟通的私人课程。（提供英语选项）。</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="why-us" class="section">
+        <h2 class="section-title">
+            <span class="id">Mengapa Eelite?</span>
+            <span class="zh">为什么选择Eelite？</span>
+        </h2>
+        <div class="grid-3">
+            <div class="card">
+                <i class="fas fa-gamepad"></i>
+                <h3><span class="id">Metode Interaktif</span><span class="zh">互动式学习</span></h3>
+                <p><span class="id">Tidak hanya textbook! Belajar melalui games, roleplay, dan studi kasus nyata.</span><span class="zh">告别死记硬背！通过游戏、角色扮演和真实案例学习。</span></p>
+            </div>
+            <div class="card">
+                <i class="fas fa-globe-asia"></i>
+                <h3><span class="id">Pengalaman Global</span><span class="zh">全球化经验</span></h3>
+                <p><span class="id">Pengajar berpengalaman belajar dan tinggal di Taiwan serta Tiongkok.</span><span class="zh">讲师拥有在台湾及中国大陆的学习和生活经验。</span></p>
+            </div>
+            <div class="card">
+                <i class="fas fa-handshake"></i>
+                <h3><span class="id">Praktis & Langsung Terap</span><span class="zh">实用且落地</span></h3>
+                <p><span class="id">Fokus pada apa yang benar-benar Anda butuhkan di lapangan kerja dan bisnis.</span><span class="zh">专注于您在实际工作和商业中真正需要的技能。</span></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section section-light">
+        <h2 class="section-title">
+            <span class="id">Profil & Pengalaman Pengajar</span>
+            <span class="zh">讲师简介与经验</span>
+        </h2>
+        <div class="experience-content">
+            <div class="experience-text">
+                <h3><span class="id">Pengalaman Nyata di Lapangan</span><span class="zh">真实的实战经验</span></h3>
+                <p style="margin-top: 15px;">
+                    <span class="id">Dengan pengalaman mengajar bahasa untuk staf restoran, manajemen hotel, dan karyawan industri struktural, kami memahami hambatan komunikasi spesifik di tempat kerja. Selain itu, pengalaman akademis dan kultural pengajar selama menempuh studi di Taiwan dan Tiongkok memastikan Anda tidak hanya belajar bahasa, tetapi juga memahami budaya berbisnis.</span>
+                    <span class="zh">通过为餐厅员工、酒店管理层及工业结构员工提供语言培训的经验，我们深知职场中特定的沟通障碍。此外，讲师在台湾及中国大陆留学积累的学术与文化底蕴，确保您不仅学会语言，更能掌握商业礼仪与文化。</span>
+                </p>
+            </div>
+            <div class="experience-photos">
+                <img src="1000161087.jpg" alt="Pengalaman di Taiwan">
+                <img src="1000161095.jpg" alt="Pengalaman di Tiongkok">
+                <img src="1000161098.jpg" alt="Pengalaman Mengajar">
+            </div>
+        </div>
+    </section>
+
+    <section id="video" class="section">
+        <h2 class="section-title">
+            <span class="id">Intip Kelas Kami</span>
+            <span class="zh">课堂剪影</span>
+        </h2>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/qa24KpSpzOM?rel=0" title="Belajar Bahasa Mandarin untuk Pelayan Restoran" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <section id="testimonials" class="section section-light">
+        <h2 class="section-title">
+            <span class="id">Apa Kata Mereka?</span>
+            <span class="zh">学员评价</span>
+        </h2>
+        <div class="grid-3">
+            <div class="testimonial-card">
+                <p class="id">"Bagus banget, aku jadi ngerti customer mau pesan seafood apa!"</p>
+                <p class="zh">"太棒了，我现在终于听懂顾客想点什么海鲜了！"</p>
+                <div class="author">- Staf Restoran / 餐厅职员</div>
+            </div>
+            <div class="testimonial-card">
+                <p class="id">"Customer shock kok aku bisa bahasa Mandarin yang natural banget."</p>
+                <p class="zh">"顾客很震惊，我的中文居然说得这么地道自然。"</p>
+                <div class="author">- Staf Perhotelan / 酒店职员</div>
+            </div>
+            <div class="testimonial-card">
+                <p class="id">"Aku jadi tau cara jawab komunikasi bisnis pakai bahasa Indonesia yang baik."</p>
+                <p class="zh">"我学会了如何用标准的印尼语回复商务沟通。"</p>
+                <div class="author">- Expatriat / 外籍高管</div>
+            </div>
+            <div class="testimonial-card">
+                <p class="id">"Sekarang aku mengerti apa yang dikatakan orang Indonesia saat meeting."</p>
+                <p class="zh">"现在开会时，我完全听得懂印尼同事在说什么了。"</p>
+                <div class="author">- Staf Supplier / 供应商职员</div>
+            </div>
+            <div class="testimonial-card">
+                <p class="id">"Belajar belanja di 1688 dari nol sampai bisa nego sama supplier Tiongkok, luar biasa!"</p>
+                <p class="zh">"从零开始学习在1688购物，甚至学会了和中国供应商谈判，太不可思议了！"</p>
+                <div class="author">- Pebisnis Online / 电商老板</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="section">
+        <h2 class="section-title">
+            <span class="id">Pertanyaan yang Sering Diajukan</span>
+            <span class="zh">常见问题 (FAQ)</span>
+        </h2>
+        <div style="max-width: 800px; margin: 0 auto;">
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span class="id">Bisakah saya membayar menggunakan WeChat atau Alipay?</span>
+                    <span class="zh">我可以使用微信或支付宝付款吗？</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <span class="id">Ya, pembayaran melalui WeChat bisa dilakukan. Namun, untuk saat ini kami belum mendukung pembayaran via Alipay.</span>
+                    <span class="zh">是的，支持微信付款，但目前暂不支持支付宝。</span>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span class="id">Kapan kursus dimulai dan selesai?</span>
+                    <span class="zh">课程什么时候开始和结束？</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <span class="id">1 paket terdiri dari 12 pertemuan. Namun, *feel free* untuk terus memperbarui dan melanjutkan pembelajaran untuk target jangka panjang Anda.</span>
+                    <span class="zh">一个套餐包含12次课程。但您可以随时续期，进行长期的技能提升。</span>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span class="id">Bagaimana metode pembelajarannya?</span>
+                    <span class="zh">上课形式是怎样的？</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <span class="id">Pembelajaran interaktif melalui *games*, *conversation* (percakapan langsung), dan studi kasus. Kita tidak murni hanya terpaku pada *textbook*.</span>
+                    <span class="zh">通过游戏、实战对话和案例分析进行互动学习。我们绝不死记硬背课本！</span>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span class="id">Apakah kelas ini cocok untuk pemula yang belum bisa sama sekali?</span>
+                    <span class="zh">这门课适合零基础的初学者吗？</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <span class="id">Tentu saja! Kurikulum kami disesuaikan dengan tingkat kemampuan peserta, dari level nol hingga tingkat bisnis.</span>
+                    <span class="zh">当然！我们的课程会根据学员的水平进行调整，从零基础到商务级别都可以。</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <h2 style="color: var(--gold); margin-bottom: 15px;">Eelite Language Academy</h2>
+        <p style="margin-bottom: 20px;">Mastering Communication</p>
+        <div style="margin-bottom: 20px;">
+            <a href="https://wa.me/6288210894715" target="_blank" style="margin: 0 10px; font-size: 1.5rem;"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/eelitelanguageacademy/" target="_blank" style="margin: 0 10px; font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
+        </div>
+        <p style="font-size: 0.8rem; color: #aaa;">&copy; 2026 Eelite Language Academy. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Fungsi Toggle Bahasa
+        let isIndonesian = true;
+        function toggleLanguage() {
+            const idElements = document.querySelectorAll('.id');
+            const zhElements = document.querySelectorAll('.zh');
+            const btnText = document.getElementById('langBtnText');
+
+            isIndonesian = !isIndonesian;
+
+            if(isIndonesian) {
+                idElements.forEach(el => el.style.display = 'inline-block'); 
+                zhElements.forEach(el => el.style.display = 'none');
+                btnText.innerText = "中文"; 
+                
+                document.querySelectorAll('p .id').forEach(el => el.style.display = 'inline');
+            } else {
+                idElements.forEach(el => el.style.display = 'none');
+                zhElements.forEach(el => el.style.display = 'inline-block');
+                btnText.innerText = "Indonesia";
+                
+                document.querySelectorAll('p .zh').forEach(el => el.style.display = 'inline');
+            }
+        }
+
+        // Jalankan sekali saat pertama load
+        document.querySelectorAll('.zh').forEach(el => el.style.display = 'none');
+
+        // Fungsi Accordion FAQ
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            
+            if (answer.style.display === "block") {
+                answer.style.display = "none";
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            } else {
+                answer.style.display = "block";
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            }
+        }
+    </script>
+</body>
+</html>
