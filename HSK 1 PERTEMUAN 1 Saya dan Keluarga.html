@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mandarin HSK 1 - Pertemuan 1</title>
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --dark: #2C3E50;
+            --bg: #F7FFF7;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--dark);
+            margin: 0;
+            padding: 0;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Navigasi */
+        nav {
+            background-color: var(--primary);
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        button.nav-link {
+            background-color: var(--white);
+            color: var(--primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        button.nav-link:hover {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+
+        button.nav-link.active {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+
+        /* Konten Laman */
+        .page {
+            display: none;
+            padding: 40px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            animation: fadeIn 0.4s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            color: var(--secondary);
+            font-size: 1.8em;
+            border-bottom: 3px solid var(--accent);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .card {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-left: 8px solid var(--secondary);
+        }
+
+        .card.accent { border-left-color: var(--accent); }
+        .card.primary { border-left-color: var(--primary); }
+
+        /* Tones Graphic Placeholder */
+        .tones-container {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tone-box {
+            background: var(--white);
+            border: 3px solid var(--accent);
+            border-radius: 10px;
+            padding: 15px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .tone-box .mark {
+            font-size: 2em;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .example-word {
+            font-size: 1.2em;
+            background-color: var(--bg);
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        /* Grid Kosakata */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .vocab-card {
+            background-color: var(--bg);
+            border: 2px solid var(--secondary);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .vocab-card:hover {
+            transform: scale(1.03);
+            background-color: var(--accent);
+            border-color: var(--primary);
+        }
+
+        .hanzi {
+            font-size: 3em;
+            color: var(--primary);
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .pinyin {
+            font-size: 1.4em;
+            color: var(--dark);
+            margin: 5px 0;
+            font-family: monospace;
+        }
+
+        .arti {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .contoh-kalimat {
+            font-size: 1em;
+            background: var(--white);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: left;
+            border-left: 4px solid var(--primary);
+        }
+
+        /* Grammar Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: var(--white);
+        }
+        
+        th, td {
+            border: 2px solid var(--bg);
+            padding: 15px;
+            text-align: left;
+            font-size: 1.1em;
+        }
+
+        th {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+
+        /* Kuis Interaktif */
+        .quiz-container {
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid var(--secondary);
+        }
+
+        .question-box {
+            display: none;
+        }
+
+        .question-box.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        .question-text {
+            font-size: 1.5em;
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .option-btn {
+            background-color: var(--bg);
+            border: 2px solid var(--secondary);
+            padding: 15px;
+            font-size: 1.2em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option-btn:hover {
+            background-color: var(--accent);
+        }
+
+        .option-btn.correct {
+            background-color: #79d70f;
+            color: white;
+            border-color: #55a604;
+        }
+
+        .option-btn.wrong {
+            background-color: #ff4a4a;
+            color: white;
+            border-color: #c40000;
+        }
+
+        .quiz-nav {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-next {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <button class="nav-link active" onclick="openPage(event, 'page1')">1. Beranda</button>
+        <button class="nav-link" onclick="openPage(event, 'page2')">2. Pinyin & Nada</button>
+        <button class="nav-link" onclick="openPage(event, 'page3')">3. Kosakata</button>
+        <button class="nav-link" onclick="openPage(event, 'page4')">4. Tata Bahasa</button>
+        <button class="nav-link" onclick="openPage(event, 'page5')">5. 4 Skills</button>
+        <button class="nav-link" onclick="openPage(event, 'page6')">6. Aktivitas & Menulis</button>
+        <button class="nav-link" onclick="openPage(event, 'page7')">7. Latihan</button>
+    </nav>
+
+    <!-- Laman 1: Beranda -->
+    <div id="page1" class="page active">
+        <h1>Pertemuan 1: Saya dan Keluarga (我和我的家)</h1>
+        <div class="card">
+            <h2>Selamat Datang! 欢迎 (Huānyíng)</h2>
+            <p>Hari ini kita memulai langkah menguasai bahasa Mandarin dari nol, dengan target 300 kosakata untuk HSK 1 3.0 dalam 12 pertemuan. Di sesi perdana ini, kita akan belajar perkenalan dasar dan konteks lingkungan kerja.</p>
+        </div>
+        <div class="card accent">
+            <h2>🎯 Target Pembelajaran Pertemuan 1:</h2>
+            <ul>
+                <li>Memahami dan melafalkan Pinyin serta 4 Nada Dasar.</li>
+                <li>Mengenal dan menghafal 25+ kosakata baru yang disebar di dalam materi.</li>
+                <li>Mampu mengaplikasikan partikel kepemilikan <strong>的 (de)</strong> dalam percakapan profesional dan sehari-hari.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Laman 2: Pinyin & Nada -->
+    <div id="page2" class="page">
+        <h1>Pinyin & 4 Nada Dasar</h1>
+        <div class="card">
+            <h2>Apa itu Pinyin?</h2>
+            <p>Pinyin adalah sistem pelafalan yang menggunakan alfabet Romawi untuk mengeja bunyi karakter Hanzi. Nada sangat penting karena nada berbeda menghasilkan arti berbeda.</p>
+        </div>
+        
+        <div class="card primary">
+            <h2>Ilustrasi 4 Nada & Gerakan Tangan</h2>
+            <p>Ikuti panduan tangan guru di kelas untuk menghafal nada-nada berikut. <em>Perhatikan kosakata baru di bawah ini!</em></p>
+            <div class="tones-container">
+                <div class="tone-box">
+                    <div class="mark">ˉ</div>
+                    <h3>Nada 1 (Datar)</h3>
+                    <p><em>Tangan mendatar.</em></p>
+                    <div class="example-word">妈 (mā) - Ibu</div>
+                    <div class="example-word">喝 (hē) - Minum</div>
+                    <div class="example-word">听 (tīng) - Mendengar</div>
+                </div>
+                <div class="tone-box">
+                    <div class="mark">ˊ</div>
+                    <h3>Nada 2 (Naik)</h3>
+                    <p><em>Tangan diayun miring ke atas.</em></p>
+                    <div class="example-word">茶 (chá) - Teh</div>
+                    <div class="example-word">来 (lái) - Datang</div>
+                    <div class="example-word">谁 (shéi) - Siapa</div>
+                </div>
+                <div class="tone-box">
+                    <div class="mark">ˇ</div>
+                    <h3>Nada 3 (Turun-Naik)</h3>
+                    <p><em>Tangan membentuk huruf V.</em></p>
+                    <div class="example-word">好 (hǎo) - Baik</div>
+                    <div class="example-word">买 (mǎi) - Membeli</div>
+                    <div class="example-word">水 (shuǐ) - Air</div>
+                </div>
+                <div class="tone-box">
+                    <div class="mark">ˋ</div>
+                    <h3>Nada 4 (Sentak)</h3>
+                    <p><em>Tangan ditebas ke bawah.</em></p>
+                    <div class="example-word">叫 (jiào) - Dipanggil</div>
+                    <div class="example-word">看 (kàn) - Melihat</div>
+                    <div class="example-word">做 (zuò) - Melakukan</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Laman 3: Kosakata -->
+    <div id="page3" class="page">
+        <h1>Kosakata Utama (生词)</h1>
+        <p>Klik/Perhatikan flashcard di bawah ini. (Kosakata lainnya telah disisipkan pada contoh kalimat, latihan nada, dan teks bacaan).</p>
+        <div class="vocab-grid">
+            <div class="vocab-card">
+                <p class="hanzi">我</p><p class="pinyin">wǒ</p><p class="arti">Saya</p>
+                <div class="contoh-kalimat">Contoh: 我喝水 (Wǒ hē shuǐ) - Saya minum air.</div>
+            </div>
+            <div class="vocab-card">
+                <p class="hanzi">我们</p><p class="pinyin">wǒmen</p><p class="arti">Kami / Kita</p>
+                <div class="contoh-kalimat">Contoh: 我们去公司 (Wǒmen qù gōngsī) - Kami pergi ke perusahaan.</div>
+            </div>
+            <div class="vocab-card">
+                <p class="hanzi">你</p><p class="pinyin">nǐ</p><p class="arti">Kamu</p>
+                <div class="contoh-kalimat">Contoh: 你看电脑 (Nǐ kàn diànnǎo) - Kamu melihat komputer.</div>
+            </div>
+            <div class="vocab-card">
+                <p class="hanzi">你们</p><p class="pinyin">nǐmen</p><p class="arti">Kalian</p>
+                <div class="contoh-kalimat">Contoh: 你们好 (Nǐmen hǎo) - Halo kalian.</div>
+            </div>
+            <div class="vocab-card">
+                <p class="hanzi">他 / 她</p><p class="pinyin">tā</p><p class="arti">Dia (Laki-laki / Perempuan)</p>
+                <div class="contoh-kalimat">Contoh: 他是学生 (Tā shì xuéshēng) - Dia adalah murid.</div>
+            </div>
+            <div class="vocab-card">
+                <p class="hanzi">他们</p><p class="pinyin">tāmen</p><p class="arti">Mereka</p>
+                <div class="contoh-kalimat">Contoh: 他们工作 (Tāmen gōngzuò) - Mereka bekerja.</div>
+            </div>
+            <div class="vocab-card">
+                <p class="hanzi">你好</p><p class="pinyin">nǐ hǎo</p><p class="arti">Halo</p>
+                <div class="contoh-kalimat">Contoh: 老师，你好 (Lǎoshī, nǐ hǎo) - Halo, Guru.</div>
+            </div>
+            <div class="vocab-card">
+                <p class="hanzi">老师</p><p class="pinyin">lǎoshī</p><p class="arti">Guru</p>
+                <div class="contoh-kalimat">Contoh: 老师喝茶 (Lǎoshī hē chá) - Guru minum teh.</div>
+            </div>
+            <div class="vocab-card">
+                <p class="hanzi">学生</p><p class="pinyin">xuéshēng</p><p class="arti">Murid / Mahasiswa</p>
+                <div class="contoh-kalimat">Contoh: 我们是学生 (Wǒmen shì xuéshēng) - Kami adalah murid.</div>
+            </div>
+            <div class="vocab-card">
+                <p class="hanzi">爸爸 / 妈妈</p><p class="pinyin">bàba / māma</p><p class="arti">Ayah / Ibu</p>
+                <div class="contoh-kalimat">Contoh: 爸爸去公司 (Bàba qù gōngsī) - Ayah pergi ke perusahaan.</div>
+            </div>
+            <div class="vocab-card">
+                <p class="hanzi">哥哥 / 姐姐</p><p class="pinyin">gēge / jiějie</p><p class="arti">Kakak (L) / Kakak (P)</p>
+                <div class="contoh-kalimat">Contoh: 姐姐买茶 (Jiějie mǎi chá) - Kakak (P) membeli teh.</div>
+            </div>
+            <div class="vocab-card">
+                <p class="hanzi">公司</p><p class="pinyin">gōngsī</p><p class="arti">Perusahaan</p>
+                <div class="contoh-kalimat">Contoh: 他的公司 (Tā de gōngsī) - Perusahaannya.</div>
+            </div>
+            <div class="vocab-card">
+                <p class="hanzi">工作</p><p class="pinyin">gōngzuò</p><p class="arti">Bekerja / Pekerjaan</p>
+                <div class="contoh-kalimat">Contoh: 你的工作 (Nǐ de gōngzuò) - Pekerjaanmu.</div>
+            </div>
+            <div class="vocab-card">
+                <p class="hanzi">电脑</p><p class="pinyin">diànnǎo</p><p class="arti">Komputer</p>
+                <div class="contoh-kalimat">Contoh: 这是电脑 (Zhè shì diànnǎo) - Ini adalah komputer.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Laman 4: Tata Bahasa -->
+    <div id="page4" class="page">
+        <h1>Tata Bahasa: Partikel "的 (de)" dan "是 (shì)"</h1>
+        <div class="card">
+            <h2>Rumus Dasar 1: Kepemilikan (的)</h2>
+            <p>Gunakan <strong>的 (de)</strong> setelah Subjek/Kata Ganti sebelum benda yang dimiliki.</p>
+            <h3 style="text-align: center; color: var(--primary); background: var(--accent); padding: 15px; border-radius: 10px;">Subjek + 的 (de) + Kata Benda</h3>
+            <p><em>Pengecualian: Untuk anggota keluarga dekat, "的" sering kali dihilangkan (misal: 我妈妈 wǒ māma).</em></p>
+        </div>
+        
+        <div class="card primary">
+            <h2>Contoh Pengaplikasian (Topik Kerja & Keluarga)</h2>
+            <table>
+                <tr>
+                    <th>Hanzi</th>
+                    <th>Pinyin</th>
+                    <th>Arti</th>
+                </tr>
+                <tr>
+                    <td>我的电脑</td>
+                    <td>wǒ de diànnǎo</td>
+                    <td>Komputer saya</td>
+                </tr>
+                <tr>
+                    <td>你的工作</td>
+                    <td>nǐ de gōngzuò</td>
+                    <td>Pekerjaan kamu</td>
+                </tr>
+                <tr>
+                    <td>这是谁的公司？</td>
+                    <td>zhè shì shéi de gōngsī?</td>
+                    <td>Ini perusahaan siapa? (谁 shéi = siapa)</td>
+                </tr>
+                <tr>
+                    <td>老师的学生</td>
+                    <td>lǎoshī de xuéshēng</td>
+                    <td>Murid guru</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card accent">
+            <h2>Rumus Dasar 2: Adalah (是)</h2>
+            <p>Gunakan <strong>是 (shì)</strong> untuk menghubungkan subjek dengan kata benda (seperti <em>is/am/are</em>).</p>
+            <ul>
+                <li>我是学生 (Wǒ shì xuéshēng) - Saya adalah murid.</li>
+                <li>他是老师 (Tā shì lǎoshī) - Dia adalah guru.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Laman 5: Keterampilan Berbahasa -->
+    <div id="page5" class="page">
+        <h1>Keterampilan Berbahasa (Reading, Listening, Speaking)</h1>
+        
+        <div class="card">
+            <h2>📖 Reading (Membaca)</h2>
+            <p>Baca teks pendek di bawah ini dengan nada yang tepat:</p>
+            <p style="font-size: 1.5em; line-height: 2;">你好！我是学生。这是我的爸爸和妈妈。他们都在公司工作。这是我的电脑。我们很高兴。</p>
+            <p style="color: #666; font-family: monospace;">(Nǐ hǎo! Wǒ shì xuéshēng. Zhè shì wǒ de bàba hé māma. Tāmen dōu zài gōngsī gōngzuò. Zhè shì wǒ de diànnǎo. Wǒmen hěn gāoxìng.)</p>
+            <p><strong>Artinya:</strong> Halo! Saya adalah murid. Ini adalah ayah dan ibuku. Mereka semua bekerja di perusahaan. Ini adalah komputerku. Kami sangat senang.</p>
+        </div>
+
+        <div class="card accent">
+            <h2>🎧 Listening (Mendengar)</h2>
+            <p><strong>Instruksi:</strong> Guru akan membacakan sebuah kalimat pendek (misal: "tāmen hē chá" atau "shéi kàn diànnǎo").<br>
+            <strong>Tugas Siswa:</strong> Tebak artinya dengan cepat atau terjemahkan ke bahasa Indonesia secara langsung di kelas!</p>
+        </div>
+
+        <div class="card primary">
+            <h2>🗣️ Speaking & Conversation (Berbicara)</h2>
+            <p>Praktikkan dialog perkenalan pekerjaan ini bersama pasanganmu:</p>
+            <ul style="list-style-type: none; padding-left: 0; font-size: 1.2em; line-height: 2;">
+                <li><strong>A:</strong> 你好！这是你的电脑吗？<br><span style="font-size:0.8em; color:#666;">(Nǐ hǎo! Zhè shì nǐ de diànnǎo ma? - Halo! Apakah ini komputermu?)</span></li>
+                <li><strong>B:</strong> 你好！是的，这是我的电脑。<br><span style="font-size:0.8em; color:#666;">(Nǐ hǎo! Shì de, zhè shì wǒ de diànnǎo. - Halo! Ya, ini komputerku.)</span></li>
+                <li><strong>A:</strong> 你的哥哥在公司工作吗？<br><span style="font-size:0.8em; color:#666;">(Nǐ de gēge zài gōngsī gōngzuò ma? - Apakah kakak lak-lakimu bekerja di perusahaan?)</span></li>
+                <li><strong>B:</strong> 是的，他在公司工作。<br><span style="font-size:0.8em; color:#666;">(Shì de, tā zài gōngsī gōngzuò. - Ya, dia bekerja di perusahaan.)</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Laman 6: Aktivitas & Menulis -->
+    <div id="page6" class="page">
+        <h1>Aktivitas, Menulis & Games 🎮</h1>
+        
+        <div class="card">
+            <h2>📝 Menulis Hanzi Dasar (Panduan Coretan)</h2>
+            <p>Perhatikan urutan coretan dasar dari kiri ke kanan, atas ke bawah untuk karakter <strong>我 (wǒ)</strong> dan <strong>你 (nǐ)</strong> yang didemonstrasikan oleh guru di papan tulis.</p>
+            <h3 style="color: var(--primary);">Instruksi Proyek Menulis:</h3>
+            <ol>
+                <li>Siapkan kertas yang telah dibagikan.</li>
+                <li>Tuliskan karakter Hanzi <strong>我</strong>, <strong>你</strong>, <strong>爸爸</strong>, dan <strong>妈妈</strong> sesuai urutan coretan yang benar.</li>
+                <li>Tuliskan 1 kalimat kepemilikan versimu sendiri (Contoh: 我的工作 - Pekerjaan saya) di bagian bawah kertas!</li>
+            </ol>
+        </div>
+
+        <div class="card accent">
+            <h2>📱 Game Interaktif: Kahoot!</h2>
+            <p>Siapkan Handphone masing-masing untuk bermain kuis interaktif kecepatan!</p>
+            <ol>
+                <li>Buka browser (Chrome/Safari) dan ketik <strong>kahoot.it</strong></li>
+                <li>Masukkan <strong>Game PIN</strong> yang akan ditampilkan oleh guru di layar infocus.</li>
+                <li>Masukkan nama panggilan aslimu dan bersiaplah memperebutkan juara 1!</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Laman 7: Latihan -->
+    <div id="page7" class="page">
+        <h1>Latihan Pemahaman (20 Soal) 🏆</h1>
+        <p>Mari uji seberapa banyak yang sudah kamu ingat hari ini! Jawab kuis di bawah ini.</p>
+        
+        <div class="quiz-container">
+            <div id="quiz-header" style="display:flex; justify-content:space-between; margin-bottom: 20px;">
+                <span id="score-display">Skor: 0 / 20</span>
+                <span id="question-count">Soal: 1 / 20</span>
+            </div>
+            
+            <div id="question-container">
+                <!-- Pertanyaan akan di-render di sini via JS -->
+            </div>
+
+            <div class="quiz-nav">
+                <div id="feedback-msg" style="font-weight:bold; font-size:1.2em;"></div>
+                <button class="btn-next" id="next-btn" onclick="nextQuestion()">Selanjutnya ➔</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigasi SPA
+        function openPage(evt, pageId) {
+            var i, pages, navLinks;
+            pages = document.getElementsByClassName("page");
+            for (i = 0; i < pages.length; i++) {
+                pages[i].style.display = "none";
+                pages[i].className = pages[i].className.replace(" active", "");
+            }
+            navLinks = document.getElementsByClassName("nav-link");
+            for (i = 0; i < navLinks.length; i++) {
+                navLinks[i].className = navLinks[i].className.replace(" active", "");
+            }
+            document.getElementById(pageId).style.display = "block";
+            document.getElementById(pageId).className += " active";
+            evt.currentTarget.className += " active";
+        }
+
+        // Data Kuis Laman 7
+        const quizData = [
+            { q: "Apa arti dari '我' (wǒ)?", options: ["Kamu", "Saya", "Dia", "Kami"], answer: 1 },
+            { q: "Kosakata 'Minum' dalam bahasa Mandarin adalah?", options: ["做 (zuò)", "吃 (chī)", "叫 (jiào)", "喝 (hē)"], answer: 3 },
+            { q: "Kata 'Mereka' dalam bahasa Mandarin adalah?", options: ["我们", "他们", "你们", "你好"], answer: 1 },
+            { q: "Apa arti '老师' (lǎoshī)?", options: ["Guru", "Murid", "Ayah", "Perusahaan"], answer: 0 },
+            { q: "Kosakata 'Perusahaan' dalam Mandarin adalah?", options: ["电脑", "工作", "公司", "学校"], answer: 2 },
+            { q: "Terjemahkan ke Mandarin: 'Komputer saya'", options: ["我的电脑", "你的电脑", "他的电脑", "我电脑"], answer: 0 },
+            { q: "Nada berapakah karakter '好' (hǎo)?", options: ["Nada 1", "Nada 2", "Nada 3", "Nada 4"], answer: 2 },
+            { q: "'学生' (xuéshēng) memiliki arti?", options: ["Pekerjaan", "Guru", "Keluarga", "Murid/Mahasiswa"], answer: 3 },
+            { q: "Partikel yang digunakan untuk menyatakan kepemilikan adalah?", options: ["吗 (ma)", "的 (de)", "很 (hěn)", "是 (shì)"], answer: 1 },
+            { q: "Terjemahkan: 'Ini komputer siapa?' (谁 = shéi)", options: ["他是谁", "这是谁的电脑", "你的工作", "谁喝茶"], answer: 1 },
+            { q: "Pinyin dari 'Ayah' adalah?", options: ["māma", "bàba", "gēge", "dìdi"], answer: 1 },
+            { q: "Apa arti dari kalimat '你好' (nǐ hǎo)?", options: ["Selamat tinggal", "Terima kasih", "Halo", "Maaf"], answer: 2 },
+            { q: "Karakter '妈' (mā) menggunakan nada?", options: ["Nada 1", "Nada 2", "Nada 3", "Nada 4"], answer: 0 },
+            { q: "Siapakah '哥哥' (gēge)?", options: ["Kakak Perempuan", "Adik Laki-laki", "Kakak Laki-laki", "Guru"], answer: 2 },
+            { q: "Lengkapi kalimat: '这是老师___电脑' (Ini adalah komputer guru)", options: ["我", "吗", "的", "他"], answer: 2 },
+            { q: "Apa arti dari '我们' (wǒmen)?", options: ["Kalian", "Mereka", "Kamu", "Kami/Kita"], answer: 3 },
+            { q: "Kata '是' (shì) dalam kalimat '我是学生' berarti?", options: ["Bukan", "Adalah / Ya", "Punya", "Sangat"], answer: 1 },
+            { q: "Terjemahkan: '他们工作' (tāmen gōngzuò)", options: ["Kamu bekerja", "Mereka bekerja", "Kami murid", "Perusahaan dia"], answer: 1 },
+            { q: "Manakah yang berarti 'Air'?", options: ["茶 (chá)", "水 (shuǐ)", "电脑 (diànnǎo)", "工作 (gōngzuò)"], answer: 1 },
+            { q: "Kosakata 'Melihat' (kàn) menggunakan nada ke-berapa?", options: ["Nada 1", "Nada 2", "Nada 3", "Nada 4"], answer: 3 }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let isAnswered = false;
+
+        function loadQuestion() {
+            const container = document.getElementById("question-container");
+            const q = quizData[currentQuestion];
+            
+            document.getElementById("question-count").innerText = `Soal: ${currentQuestion + 1} / 20`;
+            document.getElementById("score-display").innerText = `Skor: ${score} / 20`;
+            document.getElementById("feedback-msg").innerText = "";
+            document.getElementById("next-btn").style.display = "none";
+            isAnswered = false;
+
+            let optionsHtml = q.options.map((opt, index) => 
+                `<button class="option-btn" id="opt-${index}" onclick="checkAnswer(${index})">${opt}</button>`
+            ).join('');
+
+            container.innerHTML = `
+                <div class="question-box active">
+                    <div class="question-text">${currentQuestion + 1}. ${q.q}</div>
+                    <div class="options-grid">${optionsHtml}</div>
+                </div>
+            `;
+        }
+
+        function checkAnswer(selectedIndex) {
+            if (isAnswered) return;
+            isAnswered = true;
+
+            const q = quizData[currentQuestion];
+            const correctIndex = q.answer;
+
+            document.getElementById(`opt-${selectedIndex}`).classList.add(selectedIndex === correctIndex ? 'correct' : 'wrong');
+            
+            if (selectedIndex === correctIndex) {
+                score++;
+                document.getElementById("feedback-msg").innerText = "Benar! 🎉";
+                document.getElementById("feedback-msg").style.color = "#55a604";
+            } else {
+                document.getElementById(`opt-${correctIndex}`).classList.add('correct');
+                document.getElementById("feedback-msg").innerText = "Ups, kurang tepat! 😅";
+                document.getElementById("feedback-msg").style.color = "#c40000";
+            }
+
+            document.getElementById("score-display").innerText = `Skor: ${score} / 20`;
+            
+            if (currentQuestion < quizData.length - 1) {
+                document.getElementById("next-btn").style.display = "block";
+                document.getElementById("next-btn").innerText = "Selanjutnya ➔";
+            } else {
+                document.getElementById("next-btn").style.display = "block";
+                document.getElementById("next-btn").innerText = "Selesai!";
+                document.getElementById("next-btn").onclick = showFinalScore;
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function showFinalScore() {
+            const container = document.getElementById("question-container");
+            container.innerHTML = `
+                <div class="question-box active" style="text-align:center;">
+                    <div class="question-text" style="font-size: 2em; color: var(--primary);">Kuis Selesai!</div>
+                    <h2>Skor Akhir Anda: ${score} dari 20</h2>
+                    <p>Terus berlatih dan sampai jumpa di Pertemuan 2!</p>
+                    <button class="btn-next" style="display:inline-block; margin-top:20px;" onclick="location.reload()">Ulangi Kuis 🔄</button>
+                </div>
+            `;
+            document.getElementById("feedback-msg").innerText = "";
+            document.getElementById("next-btn").style.display = "none";
+        }
+
+        // Inisialisasi Kuis saat load
+        loadQuestion();
+    </script>
+</body>
+</html>
