@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mandarin HSK 1 - Pertemuan 2</title>
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --secondary: #F39C12;
+            --accent: #E8F8F5;
+            --dark: #2C3E50;
+            --bg: #F9F9F9;
+            --white: #FFFFFF;
+            --danger: #E74C3C;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--dark);
+            margin: 0;
+            padding: 0;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Navigasi */
+        nav {
+            background-color: var(--primary);
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        button.nav-link {
+            background-color: var(--white);
+            color: var(--primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        button.nav-link:hover {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+
+        button.nav-link.active {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+
+        /* Konten Laman */
+        .page {
+            display: none;
+            padding: 40px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            animation: fadeIn 0.4s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            color: var(--secondary);
+            font-size: 1.8em;
+            border-bottom: 3px solid var(--primary);
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-top: 0;
+        }
+
+        .card {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-left: 8px solid var(--primary);
+        }
+
+        .card.accent { border-left-color: var(--secondary); }
+        .card.highlight { background-color: var(--accent); border-left-color: var(--primary); }
+
+        /* Grid Kosakata & Angka */
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .flashcard {
+            background-color: var(--white);
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .flashcard:hover {
+            transform: translateY(-5px);
+            background-color: var(--accent);
+        }
+
+        /* Ukuran font Hanzi diperkecil dan white-space diset nowrap agar muat 1 baris */
+        .hanzi { font-size: 2em; color: var(--primary); font-weight: bold; margin: 0; line-height: 1.2; white-space: nowrap; }
+        .pinyin { font-size: 1.2em; color: var(--dark); margin: 5px 0; font-family: monospace; }
+        .arti { font-size: 1.1em; font-weight: bold; color: var(--secondary); margin-bottom: 10px; }
+        
+        .contoh-kalimat {
+            font-size: 1em;
+            background: var(--bg);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: left;
+            border-left: 4px solid var(--secondary);
+            margin-top: 10px;
+        }
+
+        .latihan-angka {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            font-size: 3em;
+            font-weight: bold;
+            color: var(--primary);
+            margin-top: 15px;
+        }
+        .latihan-angka span {
+            background: var(--white);
+            padding: 10px 20px;
+            border-radius: 15px;
+            border: 3px solid var(--secondary);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .latihan-angka span:hover {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        /* Grammar Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: var(--white);
+        }
+        th, td { border: 2px solid var(--bg); padding: 15px; text-align: left; font-size: 1.1em; }
+        th { background-color: var(--primary); color: var(--white); }
+
+        /* Aturan Menulis List */
+        .writing-rules li {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            background: var(--white);
+            padding: 10px 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+        .hanzi-inline { color: var(--primary); font-size: 1.4em; font-weight: bold; }
+
+        /* Drawing Board */
+        #drawingBoardContainer {
+            border: 3px solid var(--dark);
+            border-radius: 10px;
+            background-color: #fff;
+            margin: 20px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        #drawingBoard {
+            width: 100%;
+            height: 400px;
+            cursor: crosshair;
+            display: block;
+        }
+        .board-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            justify-content: center;
+        }
+        .btn-clear {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Kuis Interaktif */
+        .quiz-container { background-color: var(--white); padding: 25px; border-radius: 15px; border: 2px solid var(--primary); position: relative;}
+        .timer-display { font-size: 1.8em; font-weight: bold; color: var(--danger); text-align: right; }
+        .question-box { display: none; }
+        .question-box.active { display: block; animation: fadeIn 0.3s; }
+        .question-text { font-size: 1.5em; color: var(--dark); margin-bottom: 20px; font-weight: bold; }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        
+        .option-btn {
+            background-color: var(--bg); border: 2px solid var(--primary); padding: 15px; 
+            font-size: 1.2em; border-radius: 10px; cursor: pointer; transition: 0.2s;
+        }
+        .option-btn:hover:not(:disabled) { background-color: var(--accent); }
+        .option-btn.correct { background-color: #2ECC71; color: white; border-color: #27AE60; }
+        .option-btn.wrong { background-color: #E74C3C; color: white; border-color: #C0392B; }
+        .option-btn:disabled { cursor: not-allowed; }
+        
+        .quiz-nav { margin-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .btn-next { background-color: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 10px; font-size: 1.2em; cursor: pointer; display: none; }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <button class="nav-link active" onclick="openPage(event, 'page1')">1. Beranda</button>
+        <button class="nav-link" onclick="openPage(event, 'page2')">2. Angka & Latihan</button>
+        <button class="nav-link" onclick="openPage(event, 'page3')">3. Waktu & Kerja</button>
+        <button class="nav-link" onclick="openPage(event, 'page4')">4. Hari & Tata Bahasa</button>
+        <button class="nav-link" onclick="openPage(event, 'page5')">5. 4 Skills</button>
+        <button class="nav-link" onclick="openPage(event, 'page6')">6. Drawing Board & Games</button>
+        <button class="nav-link" onclick="openPage(event, 'page7')">7. Kuis (10 Detik)</button>
+    </nav>
+
+    <!-- Laman 1: Beranda -->
+    <div id="page1" class="page active">
+        <h1>Pertemuan 2: Waktu, Jadwal, dan Angka</h1>
+        <div class="card">
+            <h2>Selamat Datang Kembali! 欢迎 (Huānyíng)</h2>
+            <p>Di pertemuan kedua ini, kita akan mempelajari 25 kosakata baru yang sangat penting untuk dunia profesional: Angka dan Waktu. Di akhir sesi, Anda akan mampu menyebutkan jadwal meeting, jam masuk kerja, dan menyusun kalender.</p>
+        </div>
+        <div class="card accent">
+            <h2>🎯 Target Pembelajaran:</h2>
+            <ul>
+                <li>Menguasai angka 0 hingga 100 dan logikanya.</li>
+                <li>Menyatakan waktu (Jam dan Menit).</li>
+                <li>Menyebutkan tanggal dan hari dalam seminggu.</li>
+                <li>Membuat kalimat jadwal pekerjaan (Kapan Anda bekerja/rapat).</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Laman 2: Kosakata (Angka) -->
+    <div id="page2" class="page">
+        <h1>Angka Mandarin (数字)</h1>
+        <div class="card">
+            <p>Hafalkan angka 0-10 berikut. Dengan menguasai dasar ini, Anda bisa menyusun angka hingga ratusan!</p>
+            <div class="number-grid">
+                <div class="flashcard"><p class="hanzi">零</p><p class="pinyin">líng</p><p class="arti">0 (Nol)</p></div>
+                <div class="flashcard"><p class="hanzi">一</p><p class="pinyin">yī</p><p class="arti">1</p></div>
+                <div class="flashcard"><p class="hanzi">二</p><p class="pinyin">èr</p><p class="arti">2</p></div>
+                <div class="flashcard"><p class="hanzi">三</p><p class="pinyin">sān</p><p class="arti">3</p></div>
+                <div class="flashcard"><p class="hanzi">四</p><p class="pinyin">sì</p><p class="arti">4</p></div>
+                <div class="flashcard"><p class="hanzi">五</p><p class="pinyin">wǔ</p><p class="arti">5</p></div>
+                <div class="flashcard"><p class="hanzi">六</p><p class="pinyin">liù</p><p class="arti">6</p></div>
+                <div class="flashcard"><p class="hanzi">七</p><p class="pinyin">qī</p><p class="arti">7</p></div>
+                <div class="flashcard"><p class="hanzi">八</p><p class="pinyin">bā</p><p class="arti">8</p></div>
+                <div class="flashcard"><p class="hanzi">九</p><p class="pinyin">jiǔ</p><p class="arti">9</p></div>
+                <div class="flashcard"><p class="hanzi">十</p><p class="pinyin">shí</p><p class="arti">10</p></div>
+                <div class="flashcard"><p class="hanzi">百</p><p class="pinyin">bǎi</p><p class="arti">Ratus (100 = 一百)</p></div>
+            </div>
+            
+            <h3 style="color: var(--secondary);">Logika Menyusun Angka:</h3>
+            <ul>
+                <li><strong>Belasan (10 + Angka):</strong> 11 = 十一 (shí yī), 15 = 十五 (shí wǔ)</li>
+                <li><strong>Puluhan (Angka + 10):</strong> 20 = 二十 (èr shí), 50 = 五十 (wǔ shí)</li>
+                <li><strong>Puluhan & Satuan (Angka + 10 + Angka):</strong> 25 = 二十五 (èr shí wǔ), 98 = 九十八 (jiǔ shí bā)</li>
+            </ul>
+        </div>
+
+        <div class="card highlight">
+            <h2>Latihan Kelas: Uji Kecepatan Membaca Angka!</h2>
+            <p>Sebutkan angka-angka di bawah ini ke dalam bahasa Mandarin dengan lantang:</p>
+            <div class="latihan-angka">
+                <span>21</span>
+                <span>99</span>
+                <span>38</span>
+                <span>75</span>
+                <span>40</span>
+                <span>93</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Laman 3: Waktu & Rutinitas -->
+    <div id="page3" class="page">
+        <h1>Waktu & Jadwal Kerja (时间)</h1>
+        <div class="vocab-grid">
+            <div class="flashcard">
+                <p class="hanzi">点 / 分</p><p class="pinyin">diǎn / fēn</p><p class="arti">Jam (O'clock) / Menit</p>
+                <div class="contoh-kalimat">Contoh: 八点十分 (Bā diǎn shí fēn) - Jam 8 lewat 10 menit.</div>
+            </div>
+            <div class="flashcard">
+                <p class="hanzi">半</p><p class="pinyin">bàn</p><p class="arti">Setengah (30 Menit)</p>
+                <div class="contoh-kalimat">Contoh: 九点半 (Jiǔ diǎn bàn) - Jam 9.30 (Setengah 10).</div>
+            </div>
+            <div class="flashcard">
+                <p class="hanzi">年 / 月 / 号(日)</p><p class="pinyin">nián / yuè / hào(rì)</p><p class="arti">Tahun / Bulan / Tanggal</p>
+                <div class="contoh-kalimat">Contoh: 二〇二四年一月 (Èr líng èr sì nián yī yuè) - Bulan 1 Tahun 2024.</div>
+            </div>
+            <div class="flashcard">
+                <p class="hanzi">星期</p><p class="pinyin">xīngqī</p><p class="arti">Minggu (Week/Hari)</p>
+                <div class="contoh-kalimat">Contoh: 星期一 (Xīngqī yī) - Hari Senin.</div>
+            </div>
+            <div class="flashcard">
+                <p class="hanzi">今天 / 明天</p><p class="pinyin">jīntiān / míngtiān</p><p class="arti">Hari ini / Besok</p>
+                <div class="contoh-kalimat">Contoh: 明天星期三 (Míngtiān xīngqī sān) - Besok hari Rabu.</div>
+            </div>
+            <div class="flashcard">
+                <p class="hanzi">早上</p><p class="pinyin">zǎoshang</p><p class="arti">Pagi hari</p>
+                <div class="contoh-kalimat">Contoh: 早上八点 (Zǎoshang bā diǎn) - Jam 8 Pagi.</div>
+            </div>
+            <div class="flashcard">
+                <p class="hanzi">上班 / 下班</p><p class="pinyin">shàngbān / xiàbān</p><p class="arti">Masuk Kerja / Pulang Kerja</p>
+                <div class="contoh-kalimat">Contoh: 我六点下班 (Wǒ liù diǎn xiàbān) - Saya pulang kerja jam 6.</div>
+            </div>
+            <div class="flashcard">
+                <p class="hanzi">两</p><p class="pinyin">liǎng</p><p class="arti">Dua (Khusus untuk jumlah/jam)</p>
+                <div class="contoh-kalimat">Contoh: 两点 (Liǎng diǎn) - Jam 2 (Bukan èr diǎn).</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Laman 4: Tata Bahasa & Hari -->
+    <div id="page4" class="page">
+        <h1>Hari dan Format Tanggal</h1>
+        
+        <div class="card">
+            <h2>1. Nama-Nama Hari dalam Seminggu</h2>
+            <p>Penyebutan hari dalam bahasa Mandarin sangat mudah, cukup gunakan <strong>星期 (xīngqī)</strong> + Angka berurutan dari 1 sampai 6. Khusus hari Minggu menggunakan karakter 天 (tiān) atau 日 (rì).</p>
+            <table style="text-align: center;">
+                <tr>
+                    <td>Senin = <strong>星期一</strong></td>
+                    <td>Selasa = <strong>星期二</strong></td>
+                    <td>Rabu = <strong>星期三</strong></td>
+                    <td>Kamis = <strong>星期四</strong></td>
+                </tr>
+                <tr>
+                    <td>Jumat = <strong>星期五</strong></td>
+                    <td>Sabtu = <strong>星期六</strong></td>
+                    <td colspan="2" style="background-color: var(--accent);">Minggu = <strong>星期天</strong> (atau 星期日)</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card highlight">
+            <h2>2. Format Penulisan Tanggal</h2>
+            <p>Susunan waktu Mandarin selalu dari unit <strong>TERBESAR ke TERKECIL</strong> (Tahun ➔ Bulan ➔ Tanggal ➔ Hari).</p>
+            <ul>
+                <li>Contoh Percakapan Lisan: <strong style="color:var(--primary);">2024年 2月 12号 星期一</strong> (Èr líng èr sì nián èr yuè shí èr hào xīngqī yī).</li>
+            </ul>
+            <div style="background-color: var(--white); padding: 15px; border-left: 5px solid var(--danger); border-radius: 8px; margin-top: 10px;">
+                <p style="margin: 0;">⚠️ <strong>Catatan Penting untuk Menulis di Buku/Jurnal:</strong><br>
+                Format ucapan di atas sangat umum. Namun, saat Anda <strong>menulis di buku, jurnal, atau surat</strong>, penulisan nama hari sering kali diletakkan di depan, menjadi: <br>
+                <span style="font-size: 1.3em; font-weight: bold; color: var(--danger);">星期一, 2024年 2月 12号</span></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>3. Struktur Kalimat Keterangan Waktu</h2>
+            <p>Keterangan waktu selalu diletakkan <strong>SEBELUM</strong> Kata Kerja (Predikat), biasanya tepat setelah Subjek.</p>
+            <h3 style="text-align: center; background: var(--accent); padding: 15px; border-radius: 10px;">Subjek + WAKTU + Kata Kerja</h3>
+            <ul>
+                <li>我<strong>九点</strong>上班。(Wǒ jiǔ diǎn shàngbān) - Saya masuk kerja jam 9.</li>
+                <li>我们<strong>星期二</strong>去公司。(Wǒmen xīngqī èr qù gōngsī) - Kami hari Selasa pergi ke perusahaan.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Laman 5: Keterampilan Berbahasa -->
+    <div id="page5" class="page">
+        <h1>Keterampilan (Reading, Listening, Speaking)</h1>
+        
+        <div class="card">
+            <h2>📖 Reading (Membaca Jadwal Kerja)</h2>
+            <p>Bacalah teks ini:</p>
+            <p style="font-size: 1.5em; line-height: 2;">你好！今天星期一。我早上八点上班，下午五点下班。明天是二月十五号，我们九点半在公司工作。</p>
+            <p style="color: #666; font-family: monospace;">(Nǐ hǎo! Jīntiān xīngqī yī. Wǒ zǎoshang bā diǎn shàngbān, xiàwǔ wǔ diǎn xiàbān. Míngtiān shì èr yuè shí wǔ hào, wǒmen jiǔ diǎn bàn zài gōngsī gōngzuò.)</p>
+            <p><strong>Artinya:</strong> Halo! Hari ini hari Senin. Saya pagi jam 8 masuk kerja, sore jam 5 pulang kerja. Besok adalah tanggal 15 Februari, kami jam 9.30 bekerja di perusahaan.</p>
+        </div>
+
+        <div class="card accent">
+            <h2>🎧 Listening (Mendengar Jam Cepat)</h2>
+            <p><strong>Instruksi Guru:</strong> Guru akan menyebutkan jam atau hari secara acak (contoh: "Shí diǎn bàn" atau "Xīngqī sì").<br>
+            <strong>Tugas Siswa:</strong> Secara bergiliran, sebutkan terjemahannya ke bahasa Indonesia dengan lantang!</p>
+        </div>
+
+        <div class="card highlight">
+            <h2>🗣️ Speaking & Conversation (Percakapan Rekan Kerja)</h2>
+            <p>Praktikkan dialog mengenai jadwal ini dengan rekan Anda:</p>
+            <ul style="list-style-type: none; padding-left: 0; font-size: 1.2em; line-height: 2;">
+                <li><strong>A:</strong> 你好！今天几号？星期几？<br><span style="font-size:0.8em; color:#666;">(Nǐ hǎo! Jīntiān jǐ hào? Xīngqī jǐ? - Halo! Hari ini tanggal berapa? Hari apa?)</span></li>
+                <li><strong>B:</strong> 今天十二号，星期四。<br><span style="font-size:0.8em; color:#666;">(Jīntiān shí èr hào, xīngqī sì. - Hari ini tgl 12, hari Kamis.)</span></li>
+                <li><strong>A:</strong> 你们明天几点上班？<br><span style="font-size:0.8em; color:#666;">(Nǐmen míngtiān jǐ diǎn shàngbān? - Kalian besok jam berapa masuk kerja?)</span></li>
+                <li><strong>B:</strong> 我们早上八点半上班。<br><span style="font-size:0.8em; color:#666;">(Wǒmen zǎoshang bā diǎn bàn shàngbān. - Kami masuk kerja jam 8.30 pagi.)</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Laman 6: Panduan Menulis, Drawing Board & Games -->
+    <div id="page6" class="page">
+        <h1>Panduan Menulis & Aktivitas Kelas</h1>
+        
+        <div class="card highlight">
+            <h2>📝 8 Aturan Emas Menulis Hanzi</h2>
+            <ul class="writing-rules" style="column-count: 2; column-gap: 20px;">
+                <li><strong>Dari atas ke bawah.</strong> (Contoh: <span class="hanzi-inline">三</span>)</li>
+                <li><strong>Dari kiri ke kanan.</strong> (Contoh: <span class="hanzi-inline">他</span>)</li>
+                <li><strong>Garis horizontal dulu, baru vertikal.</strong> (Contoh: <span class="hanzi-inline">十</span>)</li>
+                <li><strong>Miring kiri (piě) dulu, baru kanan (nà).</strong> (Contoh: <span class="hanzi-inline">人</span>)</li>
+                <li><strong>Bagian luar dulu, lalu dalam.</strong> (Contoh: <span class="hanzi-inline">月</span>)</li>
+                <li><strong>Luar & dalam dulu, tutup di akhir.</strong> (Contoh: <span class="hanzi-inline">国</span>)</li>
+                <li><strong>Tengah dulu, lalu kiri dan kanan.</strong> (Contoh: <span class="hanzi-inline">小</span>)</li>
+                <li><strong>Titik atas/kiri dulu, titik kanan paling akhir.</strong></li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Papan Tulis Digital (Drawing Board) 🖍️</h2>
+            <p><em>Guru: Gunakan mouse atau sentuhan (di layar sentuh) untuk mendemonstrasikan urutan coretan (Stroke Order) di papan ini.</em></p>
+            <div class="board-controls">
+                <button class="btn-clear" onclick="clearCanvas()">Hapus Papan</button>
+            </div>
+            <div id="drawingBoardContainer">
+                <canvas id="drawingBoard" width="800" height="400"></canvas>
+            </div>
+        </div>
+
+        <div class="card accent">
+            <h2>🎲 Aktivitas Kelas</h2>
+            <ol>
+                <li><strong>Bingo Angka:</strong> Buat kotak 3x3 di kertas. Isi dengan angka Mandarin (1-20). Guru akan menyebutkan angka acak. Yang membentuk satu garis lurus menang!</li>
+                <li><strong>Story Book Hanzi:</strong> Guru akan membagikan selembar cerita pendek bergambar. Tugas Anda adalah mengisi bagian rumpang (kosong) di cerita tersebut dengan tulisan karakter Hanzi yang tepat (angka, hari, dan anggota keluarga).</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Laman 7: Latihan Kuis Waktu -->
+    <div id="page7" class="page">
+        <h1>Latihan Cepat (Waktu: 10 Detik/Soal) ⏱️</h1>
+        <p>Mari uji refleks hafalan Anda! Anda hanya punya waktu <strong>10 detik</strong> untuk menjawab setiap pertanyaan.</p>
+        
+        <div class="quiz-container">
+            <div id="quiz-header" style="display:flex; justify-content:space-between; align-items: center; margin-bottom: 20px;">
+                <span id="question-count" style="font-size: 1.2em; font-weight: bold;">Soal: 1 / 20</span>
+                <span id="score-display" style="font-size: 1.2em; font-weight: bold;">Skor: 0 / 20</span>
+                <div class="timer-display" id="timer-display">Waktu: 10s</div>
+            </div>
+            
+            <div id="question-container">
+                <!-- Pertanyaan di-render via JS -->
+            </div>
+
+            <div class="quiz-nav">
+                <div id="feedback-msg" style="font-weight:bold; font-size:1.2em;"></div>
+                <button class="btn-next" id="next-btn" onclick="nextQuestion()">Selanjutnya ➔</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- NAVIGASI SPA ---
+        function openPage(evt, pageId) {
+            var i, pages, navLinks;
+            pages = document.getElementsByClassName("page");
+            for (i = 0; i < pages.length; i++) {
+                pages[i].style.display = "none";
+                pages[i].className = pages[i].className.replace(" active", "");
+            }
+            navLinks = document.getElementsByClassName("nav-link");
+            for (i = 0; i < navLinks.length; i++) {
+                navLinks[i].className = navLinks[i].className.replace(" active", "");
+            }
+            document.getElementById(pageId).style.display = "block";
+            document.getElementById(pageId).className += " active";
+            evt.currentTarget.className += " active";
+
+            // Resize canvas if page 6 is opened to fix potential offset issues
+            if(pageId === 'page6'){
+                resizeCanvas();
+            }
+        }
+
+        // --- DRAWING BOARD LOGIC ---
+        const canvas = document.getElementById('drawingBoard');
+        const ctx = canvas.getContext('2d');
+        let painting = false;
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            // Height is fixed to 400px in css/html attributes, but we ensure internal res matches display
+            canvas.height = 400; 
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        function startPosition(e) { 
+            painting = true; 
+            draw(e); 
+        }
+
+        function endPosition() { 
+            painting = false; 
+            ctx.beginPath(); 
+        }
+
+        function draw(e) {
+            if (!painting) return;
+            e.preventDefault(); // Prevent scrolling on touch
+            
+            const rect = canvas.getBoundingClientRect();
+            // Handle both mouse and touch events
+            let clientX = e.clientX || (e.touches && e.touches[0].clientX);
+            let clientY = e.clientY || (e.touches && e.touches[0].clientY);
+            
+            const x = clientX - rect.left;
+            const y = clientY - rect.top;
+
+            ctx.lineWidth = 6;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#2C3E50';
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        // Mouse Events
+        canvas.addEventListener('mousedown', startPosition);
+        canvas.addEventListener('mouseup', endPosition);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseout', endPosition);
+
+        // Touch Events (For tablets/smartboards)
+        canvas.addEventListener('touchstart', startPosition, {passive: false});
+        canvas.addEventListener('touchend', endPosition);
+        canvas.addEventListener('touchmove', draw, {passive: false});
+
+        function clearCanvas() { 
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+        }
+
+        // --- TIMED QUIZ LOGIC ---
+        const quizData = [
+            { q: "Angka 21 dalam Mandarin adalah?", options: ["二一 (èr yī)", "十二 (shí èr)", "二十一 (èr shí yī)", "一十二 (yī shí èr)"], answer: 2 },
+            { q: "Bagaimana menulis angka 99?", options: ["九十九 (jiǔ shí jiǔ)", "九十 (jiǔ shí)", "九九 (jiǔ jiǔ)", "十九 (shí jiǔ)"], answer: 0 },
+            { q: "Angka 38 dibaca?", options: ["三十八 (sān shí bā)", "八十三 (bā shí sān)", "三八 (sān bā)", "八三 (bā sān)"], answer: 0 },
+            { q: "Terjemahkan 'Tahun 2024':", options: ["两千二十四号", "二〇二四年", "二零二四月", "二十四分"], answer: 1 },
+            { q: "Hari Rabu dalam bahasa Mandarin adalah?", options: ["星期二 (xīngqī èr)", "星期三 (xīngqī sān)", "星期四 (xīngqī sì)", "星期一 (xīngqī yī)"], answer: 1 },
+            { q: "Manakah yang benar untuk 'Jam 2'?", options: ["二点 (èr diǎn)", "两点 (liǎng diǎn)", "半点 (bàn diǎn)", "两分 (liǎng fēn)"], answer: 1 },
+            { q: "Terjemahkan: '10.30' (Setengah 11)", options: ["十点半", "十一点半", "九点半", "三点十"], answer: 0 },
+            { q: "Kosakata 'Hari ini' adalah?", options: ["明天 (míngtiān)", "早上 (zǎoshang)", "今天 (jīntiān)", "星期 (xīngqī)"], answer: 2 },
+            { q: "Pinyin untuk 'Masuk Kerja' adalah?", options: ["xiàbān", "shàngbān", "xiūxi", "gōngzuò"], answer: 1 },
+            { q: "Apa arti '早上' (zǎoshang)?", options: ["Malam", "Siang", "Pagi", "Besok"], answer: 2 },
+            { q: "Susunan waktu kalimat Mandarin yang benar:", options: ["Tahun-Hari-Bulan", "Bulan-Tahun-Hari", "Hari-Bulan-Tahun", "Tahun-Bulan-Tanggal"], answer: 3 },
+            { q: "Kalimat manakah yang urutannya BENAR?", options: ["九点我上班", "我九点上班", "我上班九点", "上班九点我"], answer: 1 },
+            { q: "Hari Minggu disebut?", options: ["星期七", "星期天 (atau 星期日)", "星期一", "星期六"], answer: 1 },
+            { q: "Penulisan tanggal di BUKU (Jurnal) yang sering digunakan adalah?", options: ["2024年 星期一 1号", "星期一, 2024年 2月 12号", "2月 2024年", "12号 2月"], answer: 1 },
+            { q: "Terjemahkan: 'Besok hari Jumat'", options: ["今天星期五", "明天星期四", "明天星期五", "昨天星期五"], answer: 2 },
+            { q: "Kalimat 'Kami pulang kerja jam 5' adalah:", options: ["我们五点上班", "我们五点下班", "五点下班我们", "他们五点下班"], answer: 1 },
+            { q: "Angka 75 dibaca?", options: ["七五 (qī wǔ)", "五十七 (wǔ shí qī)", "七十五 (qī shí wǔ)", "十七 (shí qī)"], answer: 2 },
+            { q: "Aturan menulis hanzi '十' (shí) adalah?", options: ["Vertikal lalu Horizontal", "Terserah", "Horizontal lalu Vertikal", "Dari bawah ke atas"], answer: 2 },
+            { q: "Aturan menulis hanzi '月' (yuè) adalah?", options: ["Bagian dalam lalu luar", "Bagian luar dulu, lalu dalam", "Tengah lalu kiri kanan", "Bawah lalu atas"], answer: 1 },
+            { q: "Karakter '三' (sān) ditulis dengan urutan?", options: ["Bawah ke atas", "Kiri ke kanan", "Kanan ke kiri", "Atas ke bawah"], answer: 3 }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let isAnswered = false;
+        let timeLeft = 10;
+        let timerInterval;
+
+        function startTimer() {
+            timeLeft = 10;
+            document.getElementById('timer-display').innerText = `Waktu: ${timeLeft}s`;
+            clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer-display').innerText = `Waktu: ${timeLeft}s`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeOut();
+                }
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            const container = document.getElementById("question-container");
+            const q = quizData[currentQuestion];
+            
+            document.getElementById("question-count").innerText = `Soal: ${currentQuestion + 1} / 20`;
+            document.getElementById("score-display").innerText = `Skor: ${score} / 20`;
+            document.getElementById("feedback-msg").innerText = "";
+            document.getElementById("next-btn").style.display = "none";
+            isAnswered = false;
+
+            let optionsHtml = q.options.map((opt, index) => 
+                `<button class="option-btn" id="opt-${index}" onclick="checkAnswer(${index})">${opt}</button>`
+            ).join('');
+
+            container.innerHTML = `
+                <div class="question-box active">
+                    <div class="question-text">${currentQuestion + 1}. ${q.q}</div>
+                    <div class="options-grid">${optionsHtml}</div>
+                </div>
+            `;
+
+            startTimer(); // Mulai timer 10 detik setiap kali soal diload
+        }
+
+        function handleTimeOut() {
+            if (isAnswered) return;
+            isAnswered = true;
+            
+            // Kunci semua tombol
+            disableAllButtons();
+            
+            // Tampilkan jawaban yang benar
+            const correctIndex = quizData[currentQuestion].answer;
+            document.getElementById(`opt-${correctIndex}`).classList.add('correct');
+            
+            // Berikan pesan waktu habis
+            document.getElementById("feedback-msg").innerText = "Waktu Habis! ⏰";
+            document.getElementById("feedback-msg").style.color = "var(--danger)";
+            
+            showNextButton();
+        }
+
+        function checkAnswer(selectedIndex) {
+            if (isAnswered) return;
+            isAnswered = true;
+            clearInterval(timerInterval); // Hentikan timer
+
+            const q = quizData[currentQuestion];
+            const correctIndex = q.answer;
+
+            disableAllButtons();
+
+            document.getElementById(`opt-${selectedIndex}`).classList.add(selectedIndex === correctIndex ? 'correct' : 'wrong');
+            
+            if (selectedIndex === correctIndex) {
+                score++;
+                document.getElementById("feedback-msg").innerText = "Benar! 🎉";
+                document.getElementById("feedback-msg").style.color = "#27AE60";
+            } else {
+                document.getElementById(`opt-${correctIndex}`).classList.add('correct'); // Tunjukkan jawaban yang benar
+                document.getElementById("feedback-msg").innerText = "Ups, kurang tepat! 😅";
+                document.getElementById("feedback-msg").style.color = "#C0392B";
+            }
+
+            document.getElementById("score-display").innerText = `Skor: ${score} / 20`;
+            showNextButton();
+        }
+
+        function disableAllButtons() {
+            for(let i=0; i<4; i++){
+                let btn = document.getElementById(`opt-${i}`);
+                if(btn) btn.disabled = true;
+            }
+        }
+
+        function showNextButton() {
+            if (currentQuestion < quizData.length - 1) {
+                document.getElementById("next-btn").style.display = "block";
+                document.getElementById("next-btn").innerText = "Selanjutnya ➔";
+            } else {
+                document.getElementById("next-btn").style.display = "block";
+                document.getElementById("next-btn").innerText = "Selesai!";
+                document.getElementById("next-btn").onclick = showFinalScore;
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function showFinalScore() {
+            clearInterval(timerInterval);
+            document.getElementById('timer-display').style.display = "none";
+            const container = document.getElementById("question-container");
+            container.innerHTML = `
+                <div class="question-box active" style="text-align:center;">
+                    <div class="question-text" style="font-size: 2em; color: var(--primary);">Kuis Selesai!</div>
+                    <h2>Skor Akhir Anda: ${score} dari 20</h2>
+                    <p>Terus berlatih jadwal waktu dan hari. Sampai jumpa di Pertemuan 3!</p>
+                    <button class="btn-next" style="display:inline-block; margin-top:20px;" onclick="location.reload()">Ulangi Kuis 🔄</button>
+                </div>
+            `;
+            document.getElementById("feedback-msg").innerText = "";
+            document.getElementById("next-btn").style.display = "none";
+        }
+
+        // Inisialisasi Kuis pertama kali, timer belum berjalan sampai Laman 7 dibuka
+        // Kita akan memuat soal pertama tapi tahan timer sampai Laman 7 di klik
+        let isQuizStarted = false;
+        
+        // Modifikasi fungsi navigasi khusus untuk Kuis
+        const originalOpenPage = openPage;
+        openPage = function(evt, pageId) {
+            originalOpenPage(evt, pageId);
+            if(pageId === 'page7' && !isQuizStarted) {
+                isQuizStarted = true;
+                loadQuestion();
+            } else if (pageId !== 'page7' && isQuizStarted) {
+                // Pause/clear timer if user navigates away from quiz page
+                clearInterval(timerInterval);
+            }
+        }
+
+    </script>
+</body>
+</html>
